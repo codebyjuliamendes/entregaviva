@@ -14,3 +14,13 @@ header{backdrop-filter:blur(14px);background:#ffffffed}
 .stats>*{border-radius:14px;transition:transform .2s ease,box-shadow .2s ease}
 .stats>*:hover{transform:translateY(-3px);box-shadow:0 14px 32px #1d3c2815}
 .board{border-radius:16px}.flow>*{transition:transform .2s ease}
+
+/* Brand palette refresh — benchmarked for this product's own category */
+:root{--portfolio-accent:#a94b1e;--portfolio-soft:#fbe9dd;--portfolio-canvas:#fbf4ee;--green:#a94b1e;--green-dark:#a84e29;--bg:#fbf4ee;--line:#eddfd4}
+body{background-color:var(--portfolio-canvas)}
+.primary,.cta,.submit,.button.primary{background-color:var(--portfolio-accent)!important;color:#fff!important}
+.primary:hover,.cta:hover,.submit:hover,.button.primary:hover{filter:brightness(.93);box-shadow:0 8px 18px color-mix(in srgb,var(--portfolio-accent),transparent 78%)}
+.secondary,.ghost,.subtle{color:var(--portfolio-accent)}
+.rail-active,.nav.active,.sidebar .active{color:var(--portfolio-accent);background-color:var(--portfolio-soft)}.brand-mark,.logo{color:var(--portfolio-accent)}
+.badge,.pill,.tag{--accent-color:var(--portfolio-accent)}\n
+.primary{background-color:var(--portfolio-accent)!important}.logo{background:var(--portfolio-accent)!important}.brand>span:last-child>span{color:var(--portfolio-accent)!important}
