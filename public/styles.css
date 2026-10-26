@@ -24,3 +24,7 @@ body{background-color:var(--portfolio-canvas)}
 .rail-active,.nav.active,.sidebar .active{color:var(--portfolio-accent);background-color:var(--portfolio-soft)}.brand-mark,.logo{color:var(--portfolio-accent)}
 .badge,.pill,.tag{--accent-color:var(--portfolio-accent)}\n
 .primary{background-color:var(--portfolio-accent)!important}.logo{background:var(--portfolio-accent)!important}.brand>span:last-child>span{color:var(--portfolio-accent)!important}
+
+/* Editorial navigation and restrained surfaces */
+body{background-image:none!important}
+.panel,.changes-panel,.history-panel,.ticket-column,.detail,.knowledge,.preview-panel{box-shadow:none!important}
