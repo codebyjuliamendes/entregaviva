@@ -19,6 +19,8 @@ Abra <http://localhost:3003>. Pedidos fictícios demonstram cada etapa; o banco 
 - Criação e cancelamento de pedidos.
 - Transições de estado permitidas e histórico de eventos.
 - Atualizações em tempo real do painel por Server-Sent Events.
+- Estimativa configurável de entrega e página pública para acompanhar o pedido pelo código, sem expor endereço ou dados do cliente.
+- Estimativa configurável de entrega e página pública para acompanhar o pedido pelo código, sem expor endereço ou dados do cliente.
 - Separação das listas ativas e encerradas.
 
 ## Decisões técnicas
@@ -34,6 +36,12 @@ Abra <http://localhost:3003>. Pedidos fictícios demonstram cada etapa; o banco 
 - `POST /api/orders` — cria pedido.
 - `PATCH /api/orders/:id/status` — muda uma etapa válida.
 - `GET /api/events` — fluxo de eventos SSE.
+- `GET /api/orders/track/:code` — status, prazo estimado e eventos públicos do pedido.
+
+O prazo exibido é uma estimativa simples contada desde a criação, não um ETA baseado em tráfego ou localização.
+- `GET /api/orders/track/:code` — status, prazo estimado e eventos públicos do pedido.
+
+O prazo exibido é uma estimativa simples contada desde a criação, não um ETA baseado em tráfego ou localização.
 
 ## Próximas melhorias
 
