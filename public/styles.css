@@ -28,3 +28,8 @@ body{background-color:var(--portfolio-canvas)}
 /* Editorial navigation and restrained surfaces */
 body{background-image:none!important}
 .panel,.changes-panel,.history-panel,.ticket-column,.detail,.knowledge,.preview-panel{box-shadow:none!important}
+
+
+/* Product mark sizing */
+.brand-logo{display:block;width:100%;height:100%;object-fit:contain}
+.brand-mark:has(.brand-logo),.brand-icon:has(.brand-logo),.logo:has(.brand-logo),.mark:has(.brand-logo){display:grid;place-items:center;overflow:hidden}
