@@ -77,7 +77,7 @@ jobs:
           curl -fsS http://localhost:3003/api/health
           code=$(curl -fsS -X POST http://localhost:3003/api/orders \
             -H 'Content-Type: application/json' \
-            -d '{"restaurant":"Smoke Test","customer":"CI","address":"Rua CI, 1","total":12.5}' | jq -r .code)
+            -d '{"restaurant":"Smoke Test","customer":"Cliente CI","address":"Rua CI, 1","total":12.5}' | jq -r .code)
           curl -fsS "http://localhost:3003/api/orders/track/$code" | jq -e '.status == "recebido" and (has("address") | not)'
           curl -fsS -o /dev/null http://localhost:3003/track.html
           docker stop -t 15 ev
