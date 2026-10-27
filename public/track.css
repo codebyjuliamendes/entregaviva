@@ -1,1 +1,99 @@
-.back{color:#61816c;text-decoration:none;font-size:11px}.tracking{max-width:720px;padding-top:60px}.track-card{background:white;border:1px solid var(--line);border-radius:13px;padding:32px;box-shadow:0 12px 40px #24222a08}.track-card h1{font:800 27px Manrope;margin:10px 0}.track-card>p{font-size:12px;color:#85818a}.track-card form{display:flex;gap:8px;margin:22px 0 8px}.track-card input{flex:1;border:1px solid var(--line);border-radius:7px;padding:12px;font:12px 'DM Sans';text-transform:uppercase}.track-card .primary{border:0;border-radius:7px;padding:0 17px;cursor:pointer}.track-result{margin-top:24px;border-top:1px solid var(--line);padding-top:20px}.track-result h2{font:700 18px Manrope;margin:0 0 4px}.eta{color:#648c71;font-size:11px}.timeline{margin-top:20px}.track-event{display:flex;gap:11px;padding:0 0 17px;color:#8d8991;font-size:11px}.track-event i{width:9px;height:9px;flex:0 0 9px;border-radius:50%;background:#54a77c;margin-top:3px}.track-event.done{color:#39463d}.track-event small{display:block;color:#a09ba2;margin-top:4px;font-size:9px}.error{font-size:10px;color:#b64c42;min-height:15px}@media(max-width:600px){.tracking{padding:30px 14px}.track-card{padding:22px}.track-card form{flex-direction:column}.track-card .primary{padding:12px}}
+/* Public tracking page. Uses the tokens from styles.css. */
+
+.tracking { max-width: 720px; padding-top: 56px; }
+
+.track-card {
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+.track-card h1 { margin: 10px 0 6px; font: 800 30px/1.15 var(--font-display); letter-spacing: -0.8px; }
+
+.track-form { display: flex; gap: 8px; margin: 22px 0 8px; }
+.track-form input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.track-form input::placeholder { color: var(--faint); text-transform: none; letter-spacing: 0; }
+.track-form input:focus-visible { border-color: var(--accent); outline: 3px solid var(--focus); outline-offset: 0; }
+.track-form input[aria-invalid="true"] { border-color: var(--danger); }
+.track-form .primary { min-height: 48px; padding: 0 20px; }
+
+.error { min-height: 20px; color: var(--danger); font-size: 14px; }
+
+.track-result { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+.result-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.track-result h2 { margin-top: 2px; font: 700 22px var(--font-display); overflow-wrap: anywhere; }
+.status-line { margin-top: 14px; font: 700 17px var(--font-display); }
+.track-result[data-status="cancelado"] .status-line { color: var(--danger); }
+.track-result[data-status="entregue"] .status-line { color: var(--success); }
+.eta { margin-top: 2px; color: var(--muted); font-size: 14px; }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin: 22px 0 6px;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+.step {
+  position: relative;
+  padding-top: 14px;
+  color: var(--faint);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+.step::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--line);
+}
+.step.done { color: var(--ink-soft); }
+.step.done::before { background: color-mix(in srgb, var(--accent), var(--surface) 35%); }
+.step.current { color: var(--accent-text); font-weight: 700; }
+.step.current::before { background: var(--accent); }
+
+.timeline-title { margin-top: 24px; color: var(--muted); font-size: 12px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; }
+.timeline { margin: 12px 0 0; padding: 0; list-style: none; }
+.track-event { position: relative; display: flex; gap: 12px; padding: 0 0 16px; color: var(--muted); font-size: 14px; }
+.track-event:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+}
+.track-event i { width: 9px; height: 9px; flex: 0 0 9px; margin-top: 5px; border-radius: 50%; background: var(--faint); }
+.track-event.latest { color: var(--ink); font-weight: 600; }
+.track-event.latest i { background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.track-event small { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; font-weight: 400; }
+
+@media (max-width: 600px) {
+  .tracking { padding: 24px 16px 32px; }
+  .track-card { padding: 22px 18px; }
+  .track-card h1 { font-size: 25px; }
+  .track-form { flex-direction: column; }
+  .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+  .step { font-size: 11px; }
+}

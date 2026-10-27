@@ -1,1 +1,135 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5f3"><title>EntregaViva — central de pedidos</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"><script defer src="/app.js"></script><link rel="icon" type="image/svg+xml" href="/mark-ev.svg"><link rel="apple-touch-icon" href="/mark-ev.svg"></head><body><header><a class="brand" href="/"><span class="logo"><img class="brand-logo" src="/mark-ev.svg" alt=""></span><span>entrega<span>viva</span></span></a><div class="center-label"><span class="pulse"></span> CENTRAL DE PEDIDOS <span class="date" id="date"></span></div><div class="profile"><span class="avatar">FC</span><span>Food Corner<br><small>Operação</small></span><b>⌄</b></div></header><main><div class="intro"><div><span class="eyebrow">OPERAÇÃO · VISÃO GERAL</span><h1>O ritmo da cozinha.</h1><p>Acompanhe cada pedido da confirmação até a porta.</p></div><div class="intro-actions"><a class="track-link" href="/track.html">Acompanhar cliente ↗</a><button id="new-order" class="primary">+ Novo pedido</button></div></div><section class="stats"><article><span class="stat-icon mint">◷</span><div><small>AGUARDANDO</small><strong id="s-received">—</strong><span>pedidos recebidos</span></div></article><article><span class="stat-icon amber">♨</span><div><small>NA COZINHA</small><strong id="s-preparing">—</strong><span>em preparo</span></div></article><article><span class="stat-icon violet">✓</span><div><small>PRONTOS</small><strong id="s-ready">—</strong><span>para sair</span></div></article><article><span class="stat-icon blue">↗</span><div><small>EM ROTA</small><strong id="s-route">—</strong><span>com entregador</span></div></article></section><div class="board-title"><div><h2>Pedidos em andamento</h2><span id="order-count">—</span></div><span class="realtime"><i></i> Atualização ao vivo</span></div><section class="board" id="board"></section><section class="history"><div class="history-head"><div><h2>Visão do fluxo</h2><p>Cada pedido avança por etapas claras, com histórico de atualizações.</p></div><div class="flow"><span>Recebido</span><b>→</b><span>Preparando</span><b>→</b><span>Pronto</span><b>→</b><span>Em rota</span><b>→</b><span>Entregue</span></div></div></section><footer>EntregaViva <span>Protótipo de acompanhamento de pedidos · dados fictícios</span></footer></main><div id="modal" class="modal" hidden></div><div id="toast" class="toast"></div></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fbf4ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17130f" media="(prefers-color-scheme: dark)">
+  <title>EntregaViva — central de pedidos</title>
+  <link rel="icon" type="image/svg+xml" href="/mark-ev.svg">
+  <link rel="apple-touch-icon" href="/mark-ev.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/theme.js"></script>
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="EntregaViva — central de pedidos">
+      <span class="logo"><img class="brand-logo" src="/mark-ev.svg" alt="" width="30" height="30"></span>
+      <span class="brand-name">entrega<span>viva</span></span>
+    </a>
+    <div class="center-label"><span class="pulse" aria-hidden="true"></span> Central de pedidos <time class="date" id="date"></time></div>
+    <div class="topbar-actions">
+      <button type="button" class="icon-button" data-theme-toggle aria-label="Alternar tema"><span class="theme-icon" aria-hidden="true"></span></button>
+      <div class="profile"><span class="avatar" aria-hidden="true">FC</span><span class="profile-name">Food Corner<small>Operação</small></span></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="intro">
+      <div>
+        <p class="eyebrow">Operação · visão geral</p>
+        <h1>O ritmo da cozinha.</h1>
+        <p class="lead">Acompanhe cada pedido da confirmação até a porta.</p>
+      </div>
+      <div class="intro-actions">
+        <a class="track-link" href="/track.html" target="_blank" rel="noopener">Acompanhar cliente <span aria-hidden="true">↗</span></a>
+        <button type="button" id="new-order" class="primary"><span aria-hidden="true">+</span> Novo pedido</button>
+      </div>
+    </div>
+
+    <div id="banner" class="banner" role="alert" hidden>
+      <span id="banner-text"></span>
+      <button type="button" class="secondary" id="banner-retry">Tentar novamente</button>
+    </div>
+
+    <section class="stats" aria-label="Resumo por etapa">
+      <article><span class="stat-icon mint" aria-hidden="true">◷</span><div><h3>Aguardando</h3><strong id="s-received">—</strong><span>pedidos recebidos</span></div></article>
+      <article><span class="stat-icon amber" aria-hidden="true">♨</span><div><h3>Na cozinha</h3><strong id="s-preparing">—</strong><span>em preparo</span></div></article>
+      <article><span class="stat-icon violet" aria-hidden="true">✓</span><div><h3>Prontos</h3><strong id="s-ready">—</strong><span>para sair</span></div></article>
+      <article><span class="stat-icon blue" aria-hidden="true">↗</span><div><h3>Em rota</h3><strong id="s-route">—</strong><span>com entregador</span></div></article>
+    </section>
+
+    <div class="board-title">
+      <div><h2 id="board-heading">Pedidos em andamento</h2><span class="count-pill" id="order-count">—</span></div>
+      <span class="live" id="live" data-state="connecting" role="status"><i aria-hidden="true"></i><span id="live-text">Conectando…</span></span>
+    </div>
+    <section class="board" id="board" aria-labelledby="board-heading" aria-busy="true">
+      <p class="board-message">Carregando pedidos…</p>
+    </section>
+
+    <section class="history" aria-labelledby="flow-heading">
+      <div class="history-head">
+        <div>
+          <h2 id="flow-heading">Visão do fluxo</h2>
+          <p>Cada pedido avança por etapas claras, com histórico de atualizações.</p>
+        </div>
+        <ol class="flow" aria-label="Etapas do pedido">
+          <li>Recebido</li><li>Preparando</li><li>Pronto</li><li>Em rota</li><li>Entregue</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer class="site-footer">EntregaViva <span>Protótipo de acompanhamento de pedidos · dados fictícios</span></footer>
+  </main>
+
+  <dialog id="order-dialog" class="dialog" aria-labelledby="order-dialog-title">
+    <form id="order-form" class="form" novalidate>
+      <button type="button" class="close" data-close aria-label="Fechar">×</button>
+      <p class="eyebrow">EntregaViva · novo pedido</p>
+      <h2 id="order-dialog-title">Mais um pedido na cozinha.</h2>
+      <p class="form-intro">O pedido entra no fluxo como “Recebido”.</p>
+
+      <label for="f-restaurant">Restaurante</label>
+      <input id="f-restaurant" name="restaurant" required minlength="3" maxlength="70" autocomplete="off" aria-describedby="e-restaurant">
+      <p class="field-error" id="e-restaurant"></p>
+
+      <label for="f-customer">Cliente</label>
+      <input id="f-customer" name="customer" required minlength="3" maxlength="70" autocomplete="off" aria-describedby="e-customer">
+      <p class="field-error" id="e-customer"></p>
+
+      <label for="f-address">Endereço de entrega</label>
+      <input id="f-address" name="address" required minlength="3" maxlength="140" autocomplete="off" aria-describedby="e-address">
+      <p class="field-error" id="e-address"></p>
+
+      <label for="f-courier">Entregador <span class="optional">(opcional)</span></label>
+      <input id="f-courier" name="courier" maxlength="70" autocomplete="off" aria-describedby="e-courier">
+      <p class="field-error" id="e-courier"></p>
+
+      <div class="form-row">
+        <div>
+          <label for="f-total">Valor total (R$)</label>
+          <input id="f-total" name="total" type="number" inputmode="decimal" min="1" max="5000" step="0.01" required aria-describedby="e-total">
+          <p class="field-error" id="e-total"></p>
+        </div>
+        <div>
+          <label for="f-estimate">Tempo estimado (min)</label>
+          <input id="f-estimate" name="estimatedMinutes" type="number" inputmode="numeric" min="10" max="180" step="1" value="45" required aria-describedby="e-estimatedMinutes">
+          <p class="field-error" id="e-estimatedMinutes"></p>
+        </div>
+      </div>
+
+      <p class="form-error" id="form-error" role="alert"></p>
+      <button class="primary wide" type="submit">Criar pedido <span aria-hidden="true">→</span></button>
+    </form>
+  </dialog>
+
+  <dialog id="cancel-dialog" class="dialog" aria-labelledby="cancel-title" aria-describedby="cancel-text">
+    <form method="dialog" class="form">
+      <h2 id="cancel-title">Cancelar pedido?</h2>
+      <p id="cancel-text" class="form-intro"></p>
+      <div class="dialog-actions">
+        <button class="secondary" value="keep">Manter pedido</button>
+        <button class="danger" value="confirm">Cancelar pedido</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
