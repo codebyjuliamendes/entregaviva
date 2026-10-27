@@ -173,6 +173,12 @@ func TestBodyErrors(t *testing.T) {
 			t.Errorf("body %q: %d %s", body, r.status, r.raw)
 		}
 	}
+	if r := e.do(t, http.MethodPost, "/api/orders", validOrder, "Content-Type", "text/plain"); r.status != http.StatusUnsupportedMediaType {
+		t.Fatalf("text/plain must be rejected (CSRF): %d", r.status)
+	}
+	if r := e.do(t, http.MethodPost, "/api/orders", validOrder, "Content-Type", "application/json; charset=utf-8"); r.status != http.StatusCreated {
+		t.Fatalf("json with charset: %d", r.status)
+	}
 	big := `{"restaurant":"` + strings.Repeat("x", maxBodyBytes) + `"}`
 	if r := e.do(t, http.MethodPost, "/api/orders", big); r.status != http.StatusRequestEntityTooLarge {
 		t.Fatalf("big body: %d", r.status)

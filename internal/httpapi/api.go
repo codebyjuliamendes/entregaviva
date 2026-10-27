@@ -26,6 +26,7 @@ const (
 	msgMethod         = "Método não permitido para esta rota."
 	msgBadBody        = "Corpo da requisição inválido. Envie JSON."
 	msgBodyTooLarge   = "Corpo da requisição muito grande."
+	msgContentType    = "Envie os dados como JSON (Content-Type: application/json)."
 	msgInvalidOrder   = "Confira restaurante, cliente, endereço e valor do pedido."
 	msgOrderNotFound  = "Pedido não encontrado."
 	msgTrackNotFound  = "Pedido não encontrado. Confira o código de acompanhamento."

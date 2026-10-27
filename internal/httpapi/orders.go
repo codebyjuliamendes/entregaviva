@@ -6,6 +6,7 @@ import (
 	"errors"
 	"io"
 	"math"
+	"mime"
 	"net/http"
 	"strconv"
 	"strings"
@@ -281,7 +282,15 @@ func (a *api) lookupCode(w http.ResponseWriter, r *http.Request) (domain.Order, 
 }
 
 // decode reads a size-limited JSON body; it writes the error response itself.
+//
+// Requiring application/json also blocks cross-site HTML form posts (CSRF):
+// browsers cannot send that content type cross-origin without a CORS preflight,
+// which this server never approves.
 func (a *api) decode(w http.ResponseWriter, r *http.Request, dst any) bool {
+	if mt, _, err := mime.ParseMediaType(r.Header.Get("Content-Type")); err != nil || mt != "application/json" {
+		writeError(w, http.StatusUnsupportedMediaType, msgContentType)
+		return false
+	}
 	body := http.MaxBytesReader(w, r.Body, maxBodyBytes)
 	dec := json.NewDecoder(body)
 	err := dec.Decode(dst)
