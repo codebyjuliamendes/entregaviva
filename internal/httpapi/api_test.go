@@ -517,3 +517,17 @@ func TestStreamLimitAndShutdown(t *testing.T) {
 		}
 	}
 }
+
+func TestStreamSurvivesIdleLongerThanWriteTimeout(t *testing.T) {
+	old := sseWriteTimeout
+	sseWriteTimeout = 50 * time.Millisecond
+	t.Cleanup(func() { sseWriteTimeout = old })
+	e := newEnv(t, func(c *config.Config) { c.SSEHeartbeat = 300 * time.Millisecond })
+	c := openStream(t, e.srv.URL+"/api/events")
+	c.next(t)
+	time.Sleep(700 * time.Millisecond) // idle well past the per-write deadline
+	created := e.create(t)
+	if f := c.next(t); f["event"] != "order" || !strings.Contains(f["data"], created["code"].(string)) {
+		t.Fatalf("stream broke after idle period: %v", f)
+	}
+}

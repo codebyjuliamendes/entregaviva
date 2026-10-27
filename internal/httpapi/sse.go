@@ -13,7 +13,9 @@ import (
 )
 
 // sseWriteTimeout bounds each write so a stalled peer cannot pin a goroutine.
-const sseWriteTimeout = 10 * time.Second
+// The deadline is renewed before every write, so idle periods longer than it
+// are fine. A variable so tests can shorten it.
+var sseWriteTimeout = 10 * time.Second
 
 // panelStream streams full order snapshots to the operations panel.
 func (a *api) panelStream(w http.ResponseWriter, r *http.Request) {
