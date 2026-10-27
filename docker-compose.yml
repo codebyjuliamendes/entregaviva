@@ -1,0 +1,26 @@
+services:
+  entregaviva:
+    build:
+      context: .
+      args:
+        VERSION: ${VERSION:-dev}
+    image: entregaviva:local
+    ports:
+      - "${PORT:-3003}:3003"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PORT: "3003"
+      DATABASE_PATH: /data/orders.sqlite
+    volumes:
+      - entregaviva-data:/data
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop: [ALL]
+    stop_grace_period: 15s
+    restart: unless-stopped
+
+volumes:
+  entregaviva-data:

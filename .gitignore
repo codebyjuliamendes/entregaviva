@@ -1,3 +1,16 @@
-node_modules/
-data/
+# Build output
+/bin/
+/dist/
+*.test
+coverage.out
+
+# Local data and secrets
+/data/
+*.sqlite
+*.sqlite-*
 .env
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store

@@ -1,1 +1,49 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f6f5f3"><title>Acompanhar pedido — EntregaViva</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="/track.css"><script defer src="/track.js"></script></head><body><header><a class="brand" href="/"><span class="logo">ev</span><span>entrega<span>viva</span></span></a><a class="back" href="/">← Painel</a></header><main class="tracking"><section class="track-card"><span class="eyebrow">ENTREGAVIVA · ACOMPANHAMENTO</span><h1>Seu pedido, no seu ritmo.</h1><p>Digite o código recebido para ver o andamento da entrega.</p><form id="track-form"><input id="code" maxlength="16" placeholder="Ex.: FV-4821" required><button class="primary">Acompanhar</button></form><div id="error" role="alert"></div><div id="result"></div></section><footer>EntregaViva <span>O status é informado pela equipe do restaurante.</span></footer></main></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#fbf4ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17130f" media="(prefers-color-scheme: dark)">
+  <meta name="referrer" content="no-referrer">
+  <title>Acompanhar pedido — EntregaViva</title>
+  <link rel="icon" type="image/svg+xml" href="/mark-ev.svg">
+  <link rel="apple-touch-icon" href="/mark-ev.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/track.css">
+  <script src="/theme.js"></script>
+  <script defer src="/track.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <header class="topbar">
+    <a class="brand" href="/track.html" aria-label="EntregaViva — acompanhar pedido">
+      <span class="logo"><img class="brand-logo" src="/mark-ev.svg" alt="" width="30" height="30"></span>
+      <span class="brand-name">entrega<span>viva</span></span>
+    </a>
+    <div class="topbar-actions">
+      <button type="button" class="icon-button" data-theme-toggle aria-label="Alternar tema"><span class="theme-icon" aria-hidden="true"></span></button>
+    </div>
+  </header>
+
+  <main id="main" class="tracking">
+    <section class="track-card" aria-labelledby="track-title">
+      <p class="eyebrow">EntregaViva · acompanhamento</p>
+      <h1 id="track-title">Seu pedido, no seu ritmo.</h1>
+      <p class="lead">Digite o código recebido para ver o andamento da entrega.</p>
+      <form id="track-form" class="track-form" novalidate>
+        <label class="visually-hidden" for="code">Código de acompanhamento</label>
+        <input id="code" name="code" maxlength="16" placeholder="Ex.: EV-7K3M-Q9XA" autocomplete="off" autocapitalize="characters" spellcheck="false" required aria-describedby="error">
+        <button class="primary" type="submit">Acompanhar</button>
+      </form>
+      <p id="error" class="error" role="alert"></p>
+      <div id="result" aria-live="polite"></div>
+    </section>
+    <footer class="site-footer">EntregaViva <span>O status é informado pela equipe do restaurante.</span></footer>
+  </main>
+</body>
+</html>
