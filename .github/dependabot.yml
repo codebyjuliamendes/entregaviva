@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      go-dependencies:
+        patterns: ["*"]
+    # Note: recent modernc.org/sqlite releases require a newer Go toolchain;
+    # accepting them also raises the go directive in go.mod.
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    ignore:
+      # The project targets Go 1.24; move the toolchain on purpose, not via bot.
+      - dependency-name: golang
+        update-types: ["version-update:semver-minor", "version-update:semver-major"]
